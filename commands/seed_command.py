@@ -1,14 +1,15 @@
 from datetime import datetime
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 from flask_script import Command
 
 from app import db
-from app.widget import Widget
-from app.fizz.fizzbaz import Fizzbaz
 from app.fizz.fizzbar import Fizzbar
+from app.fizz.fizzbaz import Fizzbaz
 from app.other_api.doodad import Doodad
 from app.other_api.whatsit import Whatsit
+from app.widget import Widget
 
 
 def seed_things():
@@ -30,12 +31,7 @@ class SeedCommand(Command):
     """ Seed the DB."""
 
     def run(self):
-        if (
-            input(
-                "Are you sure you want to drop all tables and recreate? (y/N)\n"
-            ).lower()
-            == "y"
-        ):
+        if input("Are you sure you want to drop all tables and recreate? (y/N)\n").lower() == "y":
             print("Dropping tables...")
             db.drop_all()
             db.create_all()

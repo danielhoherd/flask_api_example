@@ -1,7 +1,8 @@
-from app import db
 from typing import List
-from .model import Widget
+
 from .interface import WidgetInterface
+from .model import Widget
+from app import db
 
 
 class WidgetService:

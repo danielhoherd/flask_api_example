@@ -1,7 +1,9 @@
-from pytest import fixture
 from flask_sqlalchemy import SQLAlchemy
-from app.test.fixtures import app, db  # noqa
+from pytest import fixture
+
 from .model import Widget
+from app.test.fixtures import app
+from app.test.fixtures import db
 
 
 @fixture

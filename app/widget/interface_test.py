@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Widget
+
 from .interface import WidgetInterface
+from .model import Widget
 
 
 @fixture

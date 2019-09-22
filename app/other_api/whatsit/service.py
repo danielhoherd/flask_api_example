@@ -1,7 +1,8 @@
-from app import db
 from typing import List
-from .model import Whatsit
+
 from .interface import WhatsitInterface
+from .model import Whatsit
+from app import db
 
 
 class WhatsitService:

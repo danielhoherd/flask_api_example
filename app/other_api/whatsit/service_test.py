@@ -1,9 +1,12 @@
-from flask_sqlalchemy import SQLAlchemy
 from typing import List
-from app.test.fixtures import app, db  # noqa
+
+from flask_sqlalchemy import SQLAlchemy
+
+from .interface import WhatsitInterface
 from .model import Whatsit
 from .service import WhatsitService  # noqa
-from .interface import WhatsitInterface
+from app.test.fixtures import app
+from app.test.fixtures import db
 
 
 def test_get_all(db: SQLAlchemy):  # noqa

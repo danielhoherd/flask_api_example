@@ -1,7 +1,11 @@
-from sqlalchemy import Integer, Column, String
-from app import db  # noqa
-from .interface import DoodadInterface
 from typing import Any
+
+from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import String
+
+from .interface import DoodadInterface
+from app import db  # noqa
 
 
 class Doodad(db.Model):  # type: ignore

@@ -1,7 +1,8 @@
-from app import db
 from typing import List
-from .model import Fizzbar
+
 from .interface import FizzbarInterface
+from .model import Fizzbar
+from app import db
 
 
 class FizzbarService:

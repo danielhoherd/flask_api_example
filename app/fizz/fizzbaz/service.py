@@ -1,10 +1,11 @@
-from app import db
 from typing import List
-from .model import Fizzbaz
+
 from .interface import FizzbazInterface
+from .model import Fizzbaz
+from app import db
 
 
-class FizzbazService():
+class FizzbazService:
     @staticmethod
     def get_all() -> List[Fizzbaz]:
         return Fizzbaz.query.all()
@@ -30,10 +31,7 @@ class FizzbazService():
 
     @staticmethod
     def create(new_attrs: FizzbazInterface) -> Fizzbaz:
-        new_fizzbaz = Fizzbaz(
-            name=new_attrs['name'],
-            purpose=new_attrs['purpose']
-        )
+        new_fizzbaz = Fizzbaz(name=new_attrs["name"], purpose=new_attrs["purpose"])
 
         db.session.add(new_fizzbaz)
         db.session.commit()

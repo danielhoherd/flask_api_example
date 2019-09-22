@@ -1,14 +1,17 @@
-from flask_sqlalchemy import SQLAlchemy
 from typing import List
-from app.test.fixtures import app, db  # noqa
+
+from flask_sqlalchemy import SQLAlchemy
+
+from .interface import FizzbazInterface
 from .model import Fizzbaz
 from .service import FizzbazService  # noqa
-from .interface import FizzbazInterface
+from app.test.fixtures import app
+from app.test.fixtures import db
 
 
 def test_get_all(db: SQLAlchemy):  # noqa
-    yin: Fizzbaz = Fizzbaz(fizzbaz_id=1, name='Yin', purpose='thing 1')
-    yang: Fizzbaz = Fizzbaz(fizzbaz_id=2, name='Yang', purpose='thing 2')
+    yin: Fizzbaz = Fizzbaz(fizzbaz_id=1, name="Yin", purpose="thing 1")
+    yang: Fizzbaz = Fizzbaz(fizzbaz_id=2, name="Yang", purpose="thing 2")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -20,21 +23,21 @@ def test_get_all(db: SQLAlchemy):  # noqa
 
 
 def test_update(db: SQLAlchemy):  # noqa
-    yin: Fizzbaz = Fizzbaz(fizzbaz_id=1, name='Yin', purpose='thing 1')
+    yin: Fizzbaz = Fizzbaz(fizzbaz_id=1, name="Yin", purpose="thing 1")
 
     db.session.add(yin)
     db.session.commit()
-    updates: FizzbazInterface = dict(name='New Fizzbaz name')
+    updates: FizzbazInterface = dict(name="New Fizzbaz name")
 
     FizzbazService.update(yin, updates)
 
     result: Fizzbaz = Fizzbaz.query.get(yin.fizzbaz_id)
-    assert result.name == 'New Fizzbaz name'
+    assert result.name == "New Fizzbaz name"
 
 
 def test_delete_by_id(db: SQLAlchemy):  # noqa
-    yin: Fizzbaz = Fizzbaz(fizzbaz_id=1, name='Yin', purpose='thing 1')
-    yang: Fizzbaz = Fizzbaz(fizzbaz_id=2, name='Yang', purpose='thing 2')
+    yin: Fizzbaz = Fizzbaz(fizzbaz_id=1, name="Yin", purpose="thing 1")
+    yang: Fizzbaz = Fizzbaz(fizzbaz_id=2, name="Yang", purpose="thing 2")
     db.session.add(yin)
     db.session.add(yang)
     db.session.commit()
@@ -50,7 +53,7 @@ def test_delete_by_id(db: SQLAlchemy):  # noqa
 
 def test_create(db: SQLAlchemy):  # noqa
 
-    yin: FizzbazInterface = dict(name='Fancy new fizzbaz', purpose='Fancy new purpose')
+    yin: FizzbazInterface = dict(name="Fancy new fizzbaz", purpose="Fancy new purpose")
     FizzbazService.create(yin)
     results: List[Fizzbaz] = Fizzbaz.query.all()
 

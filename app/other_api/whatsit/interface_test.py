@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Whatsit
+
 from .interface import WhatsitInterface
+from .model import Whatsit
 
 
 @fixture

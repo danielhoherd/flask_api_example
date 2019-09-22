@@ -1,7 +1,8 @@
-from app import db
 from typing import List
-from .model import Doodad
+
 from .interface import DoodadInterface
+from .model import Doodad
+from app import db
 
 
 class DoodadService:

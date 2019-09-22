@@ -1,68 +1,48 @@
 from unittest.mock import patch
+
 from flask.testing import FlaskClient
 
-from app.test.fixtures import client, app  # noqa
-from .service import FizzbazService
-from .schema import FizzbazSchema
-from .model import Fizzbaz
-from .interface import FizzbazInterface
 from .. import BASE_ROUTE
+from .interface import FizzbazInterface
+from .model import Fizzbaz
+from .schema import FizzbazSchema
+from .service import FizzbazService
+from app.test.fixtures import app
+from app.test.fixtures import client
 
 
-def make_fizzbaz(
-    id: int = 123, name: str = "Test fizzbaz", purpose: str = "Test purpose"
-) -> Fizzbaz:
+def make_fizzbaz(id: int = 123, name: str = "Test fizzbaz", purpose: str = "Test purpose") -> Fizzbaz:
     return Fizzbaz(fizzbaz_id=id, name=name, purpose=purpose)
 
 
 class TestFizzbazResource:
     @patch.object(
-        FizzbazService,
-        "get_all",
-        lambda: [
-            make_fizzbaz(123, name="Test Fizzbaz 1"),
-            make_fizzbaz(456, name="Test Fizzbaz 2"),
-        ],
+        FizzbazService, "get_all", lambda: [make_fizzbaz(123, name="Test Fizzbaz 1"), make_fizzbaz(456, name="Test Fizzbaz 2")]
     )
     def test_get(self, client: FlaskClient):  # noqa
         with client:
-            results = client.get(
-                f"/api/{BASE_ROUTE}/fizzbaz", follow_redirects=True
-            ).get_json()
+            results = client.get(f"/api/{BASE_ROUTE}/fizzbaz", follow_redirects=True).get_json()
             expected = (
                 FizzbazSchema(many=True)
-                .dump(
-                    [
-                        make_fizzbaz(123, name="Test Fizzbaz 1"),
-                        make_fizzbaz(456, name="Test Fizzbaz 2"),
-                    ]
-                )
+                .dump([make_fizzbaz(123, name="Test Fizzbaz 1"), make_fizzbaz(456, name="Test Fizzbaz 2")])
                 .data
             )
             for r in results:
                 assert r in expected
 
-    @patch.object(
-        FizzbazService, "create", lambda create_request: Fizzbaz(**create_request)
-    )
+    @patch.object(FizzbazService, "create", lambda create_request: Fizzbaz(**create_request))
     def test_post(self, client: FlaskClient):  # noqa
         with client:
 
             payload = dict(name="Test fizzbaz", purpose="Test purpose")
             result = client.post(f"/api/{BASE_ROUTE}/fizzbaz/", json=payload).get_json()
-            expected = (
-                FizzbazSchema()
-                .dump(Fizzbaz(name=payload["name"], purpose=payload["purpose"]))
-                .data
-            )
+            expected = FizzbazSchema().dump(Fizzbaz(name=payload["name"], purpose=payload["purpose"])).data
             assert result == expected
 
 
 def fake_update(fizzbaz: Fizzbaz, changes: FizzbazInterface) -> Fizzbaz:
     # To fake an update, just return a new object
-    updated_Fizzbaz = Fizzbaz(
-        fizzbaz_id=fizzbaz.fizzbaz_id, name=changes["name"], purpose=changes["purpose"]
-    )
+    updated_Fizzbaz = Fizzbaz(fizzbaz_id=fizzbaz.fizzbaz_id, name=changes["name"], purpose=changes["purpose"])
     return updated_Fizzbaz
 
 
@@ -85,15 +65,6 @@ class TestFizzbazIdResource:
     @patch.object(FizzbazService, "update", fake_update)
     def test_put(self, client: FlaskClient):  # noqa
         with client:
-            result = client.put(
-                f"/api/{BASE_ROUTE}/fizzbaz/123",
-                json={"name": "New Fizzbaz", "purpose": "New purpose"},
-            ).get_json()
-            expected = (
-                FizzbazSchema()
-                .dump(
-                    Fizzbaz(fizzbaz_id=123, name="New Fizzbaz", purpose="New purpose")
-                )
-                .data
-            )
+            result = client.put(f"/api/{BASE_ROUTE}/fizzbaz/123", json={"name": "New Fizzbaz", "purpose": "New purpose"}).get_json()
+            expected = FizzbazSchema().dump(Fizzbaz(fizzbaz_id=123, name="New Fizzbaz", purpose="New purpose")).data
             assert result == expected

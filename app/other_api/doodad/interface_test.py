@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Doodad
+
 from .interface import DoodadInterface
+from .model import Doodad
 
 
 @fixture

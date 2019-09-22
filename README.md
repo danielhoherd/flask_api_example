@@ -51,4 +51,3 @@ To run the test suite, simply pip install it and run from the root directory lik
 pip install pytest
 pytest
 ```
-

@@ -1,7 +1,9 @@
 import os
+
 from flask_script import Manager
 
-from app import create_app, db
+from app import create_app
+from app import db
 from commands.seed_command import SeedCommand
 
 env = os.getenv("FLASK_ENV") or "test"

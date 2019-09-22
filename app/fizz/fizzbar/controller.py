@@ -1,13 +1,16 @@
-from flask import request
-from flask_accepts import accepts, responds
-from flask_restplus import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from flask import request
+from flask.wrappers import Response
+from flask_accepts import accepts
+from flask_accepts import responds
+from flask_restplus import Namespace
+from flask_restplus import Resource
+
+from .interface import FizzbarInterface
+from .model import Fizzbar
 from .schema import FizzbarSchema
 from .service import FizzbarService
-from .model import Fizzbar
-from .interface import FizzbarInterface
 
 api = Namespace("Fizzbar", description="A modular namespace within fizz")  # noqa
 

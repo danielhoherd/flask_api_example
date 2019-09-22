@@ -1,8 +1,8 @@
 from pytest import fixture
 
+from .interface import FizzbarInterface
 from .model import Fizzbar
 from .schema import FizzbarSchema
-from .interface import FizzbarInterface
 
 
 @fixture
@@ -15,9 +15,7 @@ def test_FizzbarSchema_create(schema: FizzbarSchema):
 
 
 def test_FizzbarSchema_works(schema: FizzbarSchema):
-    params: FizzbarInterface = schema.load(
-        {"fizzbarId": "123", "name": "Test fizzbar", "purpose": "Test purpose"}
-    ).data
+    params: FizzbarInterface = schema.load({"fizzbarId": "123", "name": "Test fizzbar", "purpose": "Test purpose"}).data
     fizzbar = Fizzbar(**params)
 
     assert fizzbar.fizzbar_id == 123

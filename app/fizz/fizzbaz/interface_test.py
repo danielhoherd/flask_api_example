@@ -1,6 +1,7 @@
 from pytest import fixture
-from .model import Fizzbaz
+
 from .interface import FizzbazInterface
+from .model import Fizzbaz
 
 
 @fixture

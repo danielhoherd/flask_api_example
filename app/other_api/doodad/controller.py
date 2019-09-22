@@ -1,13 +1,16 @@
-from flask import request
-from flask_accepts import accepts, responds
-from flask_restplus import Namespace, Resource
-from flask.wrappers import Response
 from typing import List
 
+from flask import request
+from flask.wrappers import Response
+from flask_accepts import accepts
+from flask_accepts import responds
+from flask_restplus import Namespace
+from flask_restplus import Resource
+
+from .interface import DoodadInterface
+from .model import Doodad
 from .schema import DoodadSchema
 from .service import DoodadService
-from .model import Doodad
-from .interface import DoodadInterface
 
 api = Namespace("Doodad", description="A modular namespace within Other API")  # noqa
 

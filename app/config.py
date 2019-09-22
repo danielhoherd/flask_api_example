@@ -1,5 +1,6 @@
 import os
-from typing import List, Type
+from typing import List
+from typing import Type
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -13,13 +14,11 @@ class BaseConfig:
 
 class DevelopmentConfig(BaseConfig):
     CONFIG_NAME = "dev"
-    SECRET_KEY = os.getenv(
-        "DEV_SECRET_KEY", "You can't see California without Marlon Widgeto's eyes"
-    )
+    SECRET_KEY = os.getenv("DEV_SECRET_KEY", "You can't see California without Marlon Widgeto's eyes")
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = "sqlite:///{0}/app-dev.db".format(basedir)
+    SQLALCHEMY_DATABASE_URI = f"sqlite:///{basedir}/app-dev.db"
 
 
 class TestingConfig(BaseConfig):
@@ -28,7 +27,7 @@ class TestingConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///{0}/app-test.db".format(basedir)
+    SQLALCHEMY_DATABASE_URI = f"sqlite:///{basedir}/app-test.db"
 
 
 class ProductionConfig(BaseConfig):
@@ -37,12 +36,8 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = "sqlite:///{0}/app-prod.db".format(basedir)
+    SQLALCHEMY_DATABASE_URI = f"sqlite:///{basedir}/app-prod.db"
 
 
-EXPORT_CONFIGS: List[Type[BaseConfig]] = [
-    DevelopmentConfig,
-    TestingConfig,
-    ProductionConfig,
-]
+EXPORT_CONFIGS: List[Type[BaseConfig]] = [DevelopmentConfig, TestingConfig, ProductionConfig]
 config_by_name = {cfg.CONFIG_NAME: cfg for cfg in EXPORT_CONFIGS}

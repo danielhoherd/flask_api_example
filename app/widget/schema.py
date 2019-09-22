@@ -1,4 +1,5 @@
-from marshmallow import fields, Schema
+from marshmallow import fields
+from marshmallow import Schema
 
 
 class WidgetSchema(Schema):
